@@ -14,13 +14,13 @@ module.exports = NodeHelper.create({
       request({ url: url, method: 'GET' }, function (error, response, body) {
         //console.log("node_helper.js: " + body);
           if (!error && (response.statusCode == 200 || response.statusCode == 429)) {
-            console.log("node_helper.js: body -> " + body);
+            //console.log("node_helper.js: body -> " + body);
             var result = JSON.parse(body);
-            console.log("node_helper.js: body json parsed -> " + result);
+            //console.log("node_helper.js: body json parsed -> " + result);
 
-            for (i = 0; i < result["data"]["crypto_currencies"]; i++) {
+            for (i = 0; i < result["data"]["crypto_currencies"].length; i++) {
               console.log("i = " + i);
-              for (j = 0; j < result["data"]["fiat_currencies"]; j++) {
+              for (j = 0; j < result["data"]["fiat_currencies"].length; j++) {
                   console.log("node_helper.js: hakoticker obj -> " + result["data"]["crypto_currencies"][i]);
                   hakoTickers.push(result["data"]["crypto_currencies"][i]["symbol"] + result["data"]["fiat_currencies"][j]["symbol"]);
               }
