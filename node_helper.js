@@ -35,14 +35,11 @@ module.exports = NodeHelper.create({
             for (k = 0; k < hakoTickers.length; k++) {
               var pairName = hakoTickers[k];
               
-              console.log("node_helper.js: price api pushing to hakoPairs");
+              //console.log("node_helper.js: price api pushing to hakoPairs");
               // Can't put a call within a for loop..
               // https://stackoverflow.com/questions/37421274/http-request-inside-a-loop
               hakoPairs.push(self.getPair(pairName));
             }
-
-            console.log("node_helper.js: dispatching sendSocketNotification");
-            self.sendSocketNotification('DATA_RESULT', hakoPairs);
           }
 
           if (error) {
@@ -53,6 +50,8 @@ module.exports = NodeHelper.create({
           // }
       });
 
+      console.log("node_helper.js: dispatching sendSocketNotification");
+      self.sendSocketNotification('DATA_RESULT', hakoPairs);
   },
 
   //Subclass socketNotificationReceived received.
@@ -69,7 +68,7 @@ module.exports = NodeHelper.create({
         //console.log("node_helper.js: price api body -> " + body);
         var result = JSON.parse(body);
         
-        console.log("node_helper.js: price api pair_name -> " + pairName);
+        //console.log("node_helper.js: price api pair_name -> " + pairName);
         //console.log("node_helper.js: price api buy_price -> " + result["data"]["buy_price"]);
         var elementPair = {
           pair_name: pairName,
