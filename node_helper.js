@@ -19,15 +19,17 @@ module.exports = NodeHelper.create({
             //console.log("node_helper.js: body json parsed -> " + result);
 
             for (i = 0; i < result["data"]["crypto_currencies"].length; i++) {
+              var cryptoCurr = result["data"]["crypto_currencies"][i]["symbol"];
               //console.log("i = " + i);
               for (j = 0; j < result["data"]["fiat_currencies"].length; j++) {
                   //console.log("node_helper.js: hakoticker obj -> " + result["data"]["crypto_currencies"][i]);
-                  hakoTickers.push(result["data"]["crypto_currencies"][i]["symbol"] + result["data"]["fiat_currencies"][j]["symbol"]);
+                  hakoTickers.push(cryptoCurr + result["data"]["fiat_currencies"][j]["symbol"]);
               }
             }
 
             // A simple output check
-            console.log(hakoTickers.length);
+            //console.log(hakoTickers.length);
+            console.log(JSON.stringify(hakoTickers));
 
             // Retrieve the prices
             for (k = 0; k < hakoTickers.length; k++) {
