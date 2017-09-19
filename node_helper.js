@@ -51,7 +51,7 @@ module.exports = NodeHelper.create({
       });
 
       console.log("node_helper.js: dispatching sendSocketNotification");
-      self.sendSocketNotification('DATA_RESULT', hakoPairs, "assume payload 2");
+      this.sendSocketNotification('DATA_RESULT', hakoPairs, "assume payload 2");
   },
 
   //Subclass socketNotificationReceived received.
