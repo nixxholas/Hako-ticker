@@ -1,4 +1,5 @@
-# MMM-ethereum
+# Hako Tickers
+## Based on MMM-ethereum
 An `ethereum ticker` <a href="https://github.com/MichMich/MagicMirror">MagicMirror</a> module.
 Based on the <a href="https://github.com/valmassoi/MMM-bitcoin">valmassoi/MMM-bitcoin</a> module.
 
