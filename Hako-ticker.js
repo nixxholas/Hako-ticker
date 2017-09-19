@@ -1,6 +1,6 @@
 'use strict';
 
-Module.register("Hako-ticker", {
+Module.register("1", {
 
   result: {},
   defaults: {
@@ -23,37 +23,37 @@ Module.register("Hako-ticker", {
     wrapper.className = 'medium bright';
     wrapper.className = 'ticker';
 
-    var data = this.result.result;
+    var data = this.result;
+
     var symbolElement =  document.createElement("span");
-	  var breakElement =  document.createElement("br");
-    var symbol = data.pair_name;
-	  //var lastPrice = data.buy_price;
-	  var highPrice = data.buy_price;
-	  var lowPrice = data.sell_price;
-	
-    symbolElement.innerHTML = symbol + ' $';
-    wrapper.appendChild(symbolElement);
-    var priceElement = document.createElement("span");
-    priceElement.innerHTML = highPrice;
-    wrapper.appendChild(priceElement);
-	  wrapper.appendChild(breakElement);
-	  
-	  if (this.config.showHighLow) {
-		  var lowElement = document.createElement("span");
-		  lowElement.className = 'small';
-		  lowElement.innerHTML = '$' + lowPrice + '&nbsp&nbsp;&nbsp;';
-		  
-		  var highElement = document.createElement("span");
-		  highElement.className = 'small';
-		  highElement.innerHTML = '$' + highPrice;
-          
-          if (this.config.highLowColor) {
-              lowElement.className = 'small down';
-              highElement.className = 'small up';
-          }
-          
-          wrapper.appendChild(lowElement);
-		  wrapper.appendChild(highElement);
+    var breakElement =  document.createElement("br");
+    
+    for (i = 0; i < data.length; i++) {
+      var symbol = data[i].pair_name;
+      //var lastPrice = data.buy_price;
+      var highPrice = data[i].buy_price;
+      var lowPrice = data[i].sell_price;
+    
+      var priceElement = document.createElement("span");
+      var lowElement = document.createElement("span");
+      var highElement = document.createElement("span");
+      
+      symbolElement.innerHTML = symbol + ' $';
+      wrapper.appendChild(symbolElement);
+      priceElement.innerHTML = highPrice;
+      wrapper.appendChild(priceElement);
+      wrapper.appendChild(breakElement);
+      lowElement.className = 'small';
+      lowElement.innerHTML = '$' + lowPrice + '&nbsp&nbsp;&nbsp;';
+        
+      highElement.className = 'small';
+      highElement.innerHTML = '$' + highPrice;
+            
+      lowElement.className = 'small down';
+      highElement.className = 'small up';
+            
+      wrapper.appendChild(lowElement);
+      wrapper.appendChild(highElement);  
     }
     
     return wrapper;
