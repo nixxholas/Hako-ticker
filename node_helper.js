@@ -30,20 +30,24 @@ module.exports = NodeHelper.create({
             for (k = 0; k < hakoTickers.length; k++) {
               request({ url: 'https://coinhako.com/api/v1/price/currency/' + hakoTickers[k], method: 'GET' }, function (error, response, body) {
                 if (!error && (response.statusCode == 200 || response.statusCode == 429)) {
-                  console.log("node_helper.js: price api body -> " + body);
+                  //console.log("node_helper.js: price api body -> " + body);
                   var result = JSON.parse(body);
                   
+                  console.log("node_helper.js: price api pair_name -> " + hakoTickers[k]);
+                  console.log("node_helper.js: price api buy_price -> " + result["data"]["buy_price"]);
                   var elementPair = {
                     pair_name: hakoTickers[k],
                     buy_price: result["data"]["buy_price"],
                     sell_price: result["data"]["sell_price"]
                   };
 
+                  console.log("node_helper.js: price api pushing to hakoPairs");
                   hakoPairs.push(elementPair);
                 }
               });
             }
 
+            console.log("node_helper.js: dispatching sendSocketNotification");
             self.sendSocketNotification('DATA_RESULT', hakoPairs);
           }
 
