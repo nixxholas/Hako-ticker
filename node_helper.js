@@ -38,7 +38,7 @@ module.exports = NodeHelper.create({
               console.log("node_helper.js: price api pushing to hakoPairs");
               // Can't put a call within a for loop..
               // https://stackoverflow.com/questions/37421274/http-request-inside-a-loop
-              hakoPairs.push(getPair(pairName));
+              hakoPairs.push(this.getPair(pairName));
             }
 
             console.log("node_helper.js: dispatching sendSocketNotification");
