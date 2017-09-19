@@ -14,11 +14,13 @@ Module.register("1", {
   },
 
   start: function() {
+    console.log("Hako-ticker.js: start function running");
     this.getTickers();
     this.scheduleUpdate();
   },
 
   getDom: function() {
+    console.log("Hako-ticker.js: getDom function running");
     var wrapper = document.createElement("ticker");
     wrapper.className = 'medium bright';
     wrapper.className = 'ticker';
@@ -60,6 +62,7 @@ Module.register("1", {
   },
 
   scheduleUpdate: function(delay) {
+    console.log("Hako-ticker.js: scheduleUpdate function running");
     var nextLoad = this.config.updateInterval;
     if (typeof delay !== "undefined" && delay >= 0) {
       nextLoad = delay;
@@ -72,11 +75,13 @@ Module.register("1", {
   },
 
   getTickers: function () {
+    console.log("Hako-ticker.js: getTickers");
     var url = 'https://www.coinhako.com/api/v1/wallet/supported_currencies';
 	  this.sendSocketNotification('GET_DATA', url);
   },
 
   socketNotificationReceived: function(notification, payload, payload2) {
+    console.log("Hako-ticker.js: socketNotificationReceived");
     if (notification === "DATA_RESULT") {
       this.result = payload;
       this.updateDom(self.config.fadeSpeed);
