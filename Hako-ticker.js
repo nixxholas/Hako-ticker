@@ -1,6 +1,6 @@
 'use strict';
 
-Module.register("1", {
+Module.register("hako-ticker", {
 
   result: {},
   defaults: {
