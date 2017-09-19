@@ -26,6 +26,9 @@ module.exports = NodeHelper.create({
               }
             }
 
+            // A simple output check
+            console.log(hakoTickers.length);
+
             // Retrieve the prices
             for (k = 0; k < hakoTickers.length; k++) {
               var pairName = hakoTickers[k];
