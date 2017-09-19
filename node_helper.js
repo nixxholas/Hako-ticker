@@ -72,7 +72,7 @@ module.exports = NodeHelper.create({
         console.log("node_helper.js: price api pair_name -> " + pairName);
         //console.log("node_helper.js: price api buy_price -> " + result["data"]["buy_price"]);
         var elementPair = {
-          pair_name: hakoTickers[k],
+          pair_name: pairName,
           buy_price: result["data"]["buy_price"],
           sell_price: result["data"]["sell_price"]
         };
