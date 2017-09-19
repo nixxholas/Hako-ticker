@@ -29,28 +29,16 @@ module.exports = NodeHelper.create({
 
             // A simple output check
             //console.log(hakoTickers.length);
-            console.log(JSON.stringify(hakoTickers));
+            //console.log(JSON.stringify(hakoTickers));
 
             // Retrieve the prices
             for (k = 0; k < hakoTickers.length; k++) {
               var pairName = hakoTickers[k];
-              request({ url: 'https://coinhako.com/api/v1/price/currency/' + pairName, method: 'GET' }, function (error, response, body) {
-                if (!error && (response.statusCode == 200 || response.statusCode == 429)) {
-                  //console.log("node_helper.js: price api body -> " + body);
-                  var result = JSON.parse(body);
-                  
-                  console.log("node_helper.js: price api pair_name -> " + pairName);
-                  //console.log("node_helper.js: price api buy_price -> " + result["data"]["buy_price"]);
-                  var elementPair = {
-                    pair_name: hakoTickers[k],
-                    buy_price: result["data"]["buy_price"],
-                    sell_price: result["data"]["sell_price"]
-                  };
-
-                  console.log("node_helper.js: price api pushing to hakoPairs");
-                  hakoPairs.push(elementPair);
-                }
-              });
+              
+              console.log("node_helper.js: price api pushing to hakoPairs");
+              // Can't put a call within a for loop..
+              // https://stackoverflow.com/questions/37421274/http-request-inside-a-loop
+              hakoPairs.push(getPair(pairName));
             }
 
             console.log("node_helper.js: dispatching sendSocketNotification");
@@ -73,6 +61,25 @@ module.exports = NodeHelper.create({
       console.log("node_helper.js: socketNotificationReceived");
       this.getData(payload);
     }
+  },
+
+  getPair: function(pairName) {
+    request({ url: 'https://coinhako.com/api/v1/price/currency/' + pairName, method: 'GET' }, function (error, response, body) {
+      if (!error && (response.statusCode == 200 || response.statusCode == 429)) {
+        //console.log("node_helper.js: price api body -> " + body);
+        var result = JSON.parse(body);
+        
+        console.log("node_helper.js: price api pair_name -> " + pairName);
+        //console.log("node_helper.js: price api buy_price -> " + result["data"]["buy_price"]);
+        var elementPair = {
+          pair_name: hakoTickers[k],
+          buy_price: result["data"]["buy_price"],
+          sell_price: result["data"]["sell_price"]
+        };
+
+        return elementPair;
+      }
+    });
   }
 
 });
