@@ -12,12 +12,12 @@ module.exports = NodeHelper.create({
       var hakoPairs = new Array(); // List of Pairs
 
       request({ url: url, method: 'GET' }, function (error, response, body) {
-        console.log("node_helper.js: " + body);
+        //console.log("node_helper.js: " + body);
           if (!error && (response.statusCode == 200 || response.statusCode == 429)) {
             var result = JSON.parse(body);
             for (i = 0; i < result["data"]["crypto_currencies"]; i++) {
               for (j = 0; j < result["data"]["fiat_currencies"]; j++) {
-                console.log("node_helper.js: hakoticker obj -> " + result["data"]["crypto_currencies"][i]);
+                  console.log("node_helper.js: hakoticker obj -> " + result["data"]["crypto_currencies"][i]);
                   hakoTickers.push(result["data"]["crypto_currencies"][i]["symbol"] + result["data"]["fiat_currencies"][j]["symbol"]);
               }
             }
@@ -41,7 +41,12 @@ module.exports = NodeHelper.create({
 
             self.sendSocketNotification('DATA_RESULT', hakoPairs);
           }
-          console.log("[ERROR] node_helper.js: " + error);
+
+          if (error) {
+            console.log("[ERROR] node_helper.js: Error -> " + error);
+          } else {
+            console.log("Status Code: " + response.statusCode);
+          }
       });
 
   },
