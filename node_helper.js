@@ -56,6 +56,7 @@ module.exports = NodeHelper.create({
 
   //Subclass socketNotificationReceived received.
   socketNotificationReceived: function(notification, payload) {
+    console.log("node_helper.js notification string: " + notification);
     if (notification === 'GET_DATA') {
       console.log("node_helper.js: socketNotificationReceived");
       this.getData(payload);
