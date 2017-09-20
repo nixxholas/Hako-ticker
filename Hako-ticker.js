@@ -8,7 +8,7 @@ Module.register("Hako-ticker", {
     fiat: 'usd',
     showBefore: null,
     exchange: 'bitstamp',
-    updateInterval: 60000,
+    updateInterval: 300000,
 
     // Used to work out url and symbols
     fiatTable: {
