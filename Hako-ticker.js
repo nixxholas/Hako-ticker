@@ -61,7 +61,7 @@ Module.register("Hako-ticker", {
       // We iterate through each of them and do a cross check.
       console.log("getDom() pushing all pairs with checks");
       for (var pair in data.data) {
-        for (i = 0; i < currData.length; i++) {
+        for (i = 0; i < currentData.length; i++) {
           // TODO: PERFORM NOT FOUND CHECKS
           if (currentData[i].getName() == pair.getName()) {
             currentData[i].setBuyPrice(data.data[pair]["buy_price"]);
