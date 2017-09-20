@@ -45,13 +45,13 @@ Module.register("Hako-ticker", {
     var wrapper = document.createElement("ticker");
     wrapper.className = 'medium bright';
     wrapper.className = 'marquee ticker';
-    currentData = this.currData;
+    let currentData = this.currData;
 
     if (this.config.debugging) {
       console.log("getDom():" + currData);
     }
 
-    var data = this.result;
+    var data = this.results;
 
     // if (this.config.debugging) {
     //   console.log("getDom():" +  JSON.stringify(data));
