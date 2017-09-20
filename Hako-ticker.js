@@ -51,7 +51,7 @@ Module.register("Hako-ticker", {
       console.log("getDom():" + currData);
     }
 
-    var data = this.results;
+    var data = this.result;
 
     // if (this.config.debugging) {
     //   console.log("getDom():" +  JSON.stringify(data));
