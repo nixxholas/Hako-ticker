@@ -44,25 +44,32 @@ Module.register("Hako-ticker", {
     wrapper.className = 'marquee ticker';
     let currentData = this.currData;
 
-    if (this.config.debugging) {
-      console.log("getDom():" + currentData);
-    }
+    // if (this.config.debugging) {
+    //   console.log("getDom():" + currentData);
+    // }
 
     var data = this.result;
 
-    // if (this.config.debugging) {
-    //   console.log("getDom():" +  JSON.stringify(data));
-    // }
-
     if (currentData) { // If current data exists
       // We iterate through each of them and do a cross check.
-      console.log("getDom() pushing all pairs with checks");
+      console.log("getDom(): pushing all pairs with checks");
       for (var pair in data.data) {
         for (i = 0; i < currentData.length; i++) {
           // TODO: PERFORM NOT FOUND CHECKS
           if (currentData[i].name == pair) {
-            currentData[i].setBuyPrice(data.data[pair]["buy_price"]);
-            currentData[i].setSellPrice(data.data[pair]["sell_price"]);
+            // If the last price is lower than the latest price
+            if ((currentData[i].buyprice - data.data[pair]["buy_price"]) < 0) {
+              // It went up! =D
+              currentData[i].status = 2;
+            } else if ((currentData[i].buyprice - data.data[pair]["buy_price"]) > 0) {
+              // It went down =(
+              currentData[i].status = 0;
+            } else {
+              currentData[i].status = 1; // Neutral then
+            }
+
+            currentData[i].buyprice = data.data[pair]["buy_price"];
+            currentData[i].sellprice = data.data[pair]["sell_price"];
             break;
           }
         }
@@ -83,7 +90,8 @@ Module.register("Hako-ticker", {
         this.currData.push({
           name: pair,
           buyprice: data.data[pair]["buy_price"],
-          sellprice: data.data[pair]["sell_price"]
+          sellprice: data.data[pair]["sell_price"],
+          status: 1, // 0 - Down, 1 - Initial, 2 - Up
         });
       }
 
