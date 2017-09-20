@@ -1,92 +1,106 @@
+
 'use strict';
+
 
 Module.register("Hako-ticker", {
 
-  result: {},
-  defaults: {
-    updateInterval: 30000,
-	  showHighLow: true,
-    highLowColor: true
-  },
+    result: [],
+	// Default module config.
+	defaults: {
+		stocks: '.DJI,MSFT,AAPL,GOOG,INTC,CICS,TSLA,FB',
+        updateInterval: 37000
+	},
 
-  getStyles: function() {
-    return ["Hako-ticker.css"];
-  },
+    getStyles: function() {
+		return ["Hako-ticker.css"];
+	},
 
-  start: function() {
-    console.log("Hako-ticker.js: start function running");
-    this.getTickers();
-    this.scheduleUpdate();
-  },
+    start: function() { 
+        this.getStocks();
+        this.scheduleUpdate();
+    },
 
-  getDom: function() {
-    console.log("Hako-ticker.js: getDom function running");
-    var wrapper = document.createElement("ticker");
-    wrapper.className = 'medium bright';
-    wrapper.className = 'ticker';
+	// Override dom generator.
+	getDom: function() {
 
-    var data = this.result;
-
-    var symbolElement =  document.createElement("span");
-    var breakElement =  document.createElement("br");
-    
-    for (i = 0; i < data.length; i++) {
-      var symbol = data[i].pair_name;
-      //var lastPrice = data.buy_price;
-      var highPrice = data[i].buy_price;
-      var lowPrice = data[i].sell_price;
-    
-      var priceElement = document.createElement("span");
-      var lowElement = document.createElement("span");
-      var highElement = document.createElement("span");
-      
-      symbolElement.innerHTML = symbol + ' $';
-      wrapper.appendChild(symbolElement);
-      priceElement.innerHTML = highPrice;
-      wrapper.appendChild(priceElement);
-      wrapper.appendChild(breakElement);
-      lowElement.className = 'small';
-      lowElement.innerHTML = '$' + lowPrice + '&nbsp&nbsp;&nbsp;';
+        var wrapper = document.createElement("marquee");
+        wrapper.className = 'medium bright';
         
-      highElement.className = 'small';
-      highElement.innerHTML = '$' + highPrice;
-            
-      lowElement.className = 'small down';
-      highElement.className = 'small up';
-            
-      wrapper.appendChild(lowElement);
-      wrapper.appendChild(highElement);  
-    }
-    
-    return wrapper;
-  },
+        var count = 0;
 
-  scheduleUpdate: function(delay) {
-    console.log("Hako-ticker.js: scheduleUpdate function running");
-    var nextLoad = this.config.updateInterval;
-    if (typeof delay !== "undefined" && delay >= 0) {
-      nextLoad = delay;
-    }
+        var _this = this;
 
-    var self = this;
-    setInterval(function() {
-      self.getTickers();
-    }, nextLoad);
-  },
+        if (this.result.length > 0){
+            this.result.forEach(function(stock) {
+                var symbolElement =  document.createElement("span");
+                var symbol = stock.t;
+                var lastPrice = stock.l;
+                var changePercentage = stock.cp;
+                var lastClosePrice = stock.pcls_fix;
+                var lastPriceFix = stock.l_fix;
 
-  getTickers: function () {
-    console.log("Hako-ticker.js: getTickers");
-    var url = 'https://www.coinhako.com/api/v1/wallet/supported_currencies';
-	  this.sendSocketNotification('GET_DATA', url);
-  },
+                symbolElement.innerHTML = symbol + ' '; 
+                wrapper.appendChild(symbolElement);
 
-  socketNotificationReceived: function(notification, payload, payload2) {
-    console.log("Hako-ticker.js: socketNotificationReceived");
-    console.log("Hako-ticker.js notification string: " + notification);
-    if (notification === "DATA_RESULT") {
-      this.result = payload;
-      this.updateDom(self.config.fadeSpeed);
-    }
-  },
+                var priceElement = document.createElement("span");
+
+                priceElement.innerHTML = lastPrice;
+
+                var changeElement = document.createElement("span");
+                if (changePercentage > 0)
+                    changeElement.className = "up";
+                else 
+                    changeElement.className = "down";
+
+                var change = Math.round(Math.abs(lastPriceFix - lastClosePrice), -2);
+
+                changeElement.innerHTML = " " + _this.roundValue(Math.abs(lastPriceFix - lastClosePrice));
+
+                var divider = document.createElement("span"); 
+                
+                if (count < _this.result.length - 1)
+                    divider.innerHTML = '  •  ';
+
+                wrapper.appendChild(priceElement);
+
+                wrapper.appendChild(changeElement);
+
+                wrapper.appendChild(divider);
+                count++;
+            });
+
+        }
+
+        return wrapper;
+	},
+
+    scheduleUpdate: function(delay) {
+		var nextLoad = this.config.updateInterval;
+		if (typeof delay !== "undefined" && delay >= 0) {
+			nextLoad = delay;
+		}
+
+		var self = this;
+		setInterval(function() {
+			self.getStocks();
+		}, nextLoad);
+	},
+
+    roundValue: function(value) {
+       return Math.round(value*100)/100; 
+    },
+
+    getStocks: function () {
+        var url = 'http://finance.google.com/finance/info?client=ig&q=' + this.config.stocks;
+        this.sendSocketNotification('GET_STOCKS', url);
+    },
+
+
+    socketNotificationReceived: function(notification, payload) {
+        if (notification === "STOCKS_RESULT") {
+            this.result = payload;
+            this.updateDom(self.config.fadeSpeed);
+        }    
+    },
 
 });
