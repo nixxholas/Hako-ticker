@@ -98,7 +98,8 @@ Module.register("Hako-ticker", {
             break;
         }
 
-        currentPairElement.innerHTML = currentData[i].name + ' ' + currentData[i].buyprice;
+        currentPairText = currentData[i].name + ' ' + currentData[i].buyprice;
+        currentPairElement.innerHTML = currentPairText;
         if (currentPairText) {
           coinhakoBTCElement.appendChild(currentPairElement);
         }
