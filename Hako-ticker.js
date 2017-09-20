@@ -52,10 +52,14 @@ Module.register("Hako-ticker", {
     // }
 
     for (var pair in data.data) {
-      if (this.config.debugging) {
-        console.log("getDom() data array element:" +  pair);
-      }
+      // if (this.config.debugging) {
+      //   console.log("getDom() data array element:" +  pair);
+      // }
 
+      if (this.config.debugging) {
+        console.log("getDom() pair object:" +  JSON.stringify(data[pair]));
+      }
+      
       var pair = new Pair(pair, data[pair]["buy_price"], data[pair]["sell_price"]);
       
       if (this.config.debugging) {
@@ -74,7 +78,7 @@ Module.register("Hako-ticker", {
     // var exchange = this.config.exchange;
     // var fiat = this.config.fiat;
     // var fiatSymbol = this.config.fiatTable[fiat].symbol;
-    var lastPrice = 'BTCUSD IS NOW 4000000.39'; //data.last
+    var lastPrice = 'UOB is supporting u =)'; //data.last
     // if (this.config.showBefore == null) {
     //   var showBefore = this.config.exchange;
     // } else {
