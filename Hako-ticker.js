@@ -45,7 +45,7 @@ Module.register("Hako-ticker", {
     }
 
     var i;
-    for (i = 0; i < data["data"].length; i++) {
+    for (i = 0; i < data.data.length; i++) {
       if (this.config.debugging) {
         console.log("getDom() data array element:" +  data["data"][i]);
       }
