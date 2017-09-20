@@ -1,6 +1,6 @@
 'use strict';
 
-let currData = new Array();
+let currData = [];
 
 Module.register("Hako-ticker", {
 
@@ -48,7 +48,7 @@ Module.register("Hako-ticker", {
     let currentData = this.currData;
 
     if (this.config.debugging) {
-      console.log("getDom():" + currData);
+      console.log("getDom():" + currentData);
     }
 
     var data = this.result;
@@ -74,7 +74,7 @@ Module.register("Hako-ticker", {
        // Else we perform an alternate process and add the pairs in
        console.log("getDom() pushing all pairs unconditionally");
 
-      for (var pair in data.data) {
+      for (let pair in data.data) {
         // if (this.config.debugging) {
         //   console.log("getDom() data array element:" +  pair);
         // }
