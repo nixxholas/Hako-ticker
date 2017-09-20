@@ -3,6 +3,7 @@
 Module.register("Hako-ticker", {
 
   hakoallapi: "https://coinhako.com/api/v1/price/all_prices",
+  currData: {},
   result: {},
   defaults: {
     debugging: true,
@@ -22,6 +23,12 @@ Module.register("Hako-ticker", {
         exchangeCode: 'btceur'
       }
     }
+  },
+
+  getScripts: function() {
+      return [
+        this.file('Pair.js')
+      ]
   },
 
   getStyles: function() {
@@ -48,6 +55,19 @@ Module.register("Hako-ticker", {
       if (this.config.debugging) {
         console.log("getDom() data array element:" +  pair);
       }
+
+      var pair = new Pair(pair, data[pair].buy_price, data[pair].sell_price);
+      
+      if (this.config.debugging) {
+        console.log("getDom() pair object:" +  pair.getName());
+      }
+      
+      if (currData) { // If current data exists
+        // We iterate through each of them and do a cross check.
+      } else {
+        // Else we perform an alternate process and add the pairs in
+        
+      }
     }
 
     var symbolElement =  document.createElement("span");
@@ -60,6 +80,7 @@ Module.register("Hako-ticker", {
     // } else {
     //   var showBefore = this.config.showBefore
     // }
+
     if (lastPrice) {
       //symbolElement.innerHTML = showBefore + ' ' + fiatSymbol;
       //symbolElement.innerHTML = 'BTCUSD IS NOW 4000000.39';
