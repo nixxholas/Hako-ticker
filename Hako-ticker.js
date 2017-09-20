@@ -35,9 +35,10 @@ Module.register("Hako-ticker", {
   getDom: function() {
     var wrapper = document.createElement("ticker");
     wrapper.className = 'medium bright';
-    wrapper.className = 'ticker';
+    wrapper.className = 'marquee ticker';
 
     var data = this.result;
+    console.log("getDom():" + JSON.stringify(data));
     var symbolElement =  document.createElement("span");
     var exchange = this.config.exchange;
     var fiat = this.config.fiat;
@@ -53,7 +54,6 @@ Module.register("Hako-ticker", {
       //symbolElement.innerHTML = 'BTCUSD IS NOW 4000000.39';
       //wrapper.appendChild(symbolElement);
       var priceElement = document.createElement("span");
-      priceElement.className = 'marquee';
       priceElement.innerHTML = lastPrice;
       wrapper.appendChild(priceElement);
     }
@@ -73,8 +73,7 @@ Module.register("Hako-ticker", {
   },
 
   getTickers: function () {
-    var fiat = this.config.fiat;
-    var url = 'https://www.bitstamp.net/api/v2/ticker/' + this.config.fiatTable[fiat].exchangeCode + '/';
+    var url = 'https://coinhako.com/api/v1/price/all_prices';
     this.sendSocketNotification('GET_TICKERS', url);
   },
 
