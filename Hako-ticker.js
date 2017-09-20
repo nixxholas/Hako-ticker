@@ -82,6 +82,7 @@ Module.register("Hako-ticker", {
 
   socketNotificationReceived: function(notification, payload, payload2) {
     console.log("Hako-ticker.js: socketNotificationReceived");
+    console.log("Hako-ticker.js notification string: " + notification);
     if (notification === "DATA_RESULT") {
       this.result = payload;
       this.updateDom(self.config.fadeSpeed);
