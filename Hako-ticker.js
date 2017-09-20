@@ -3,7 +3,7 @@
 Module.register("Hako-ticker", {
 
   hakoallapi: "https://coinhako.com/api/v1/price/all_prices",
-  currData: {},
+  currData: new Array(),
   result: {},
   defaults: {
     debugging: true,
@@ -44,6 +44,7 @@ Module.register("Hako-ticker", {
     var wrapper = document.createElement("ticker");
     wrapper.className = 'medium bright';
     wrapper.className = 'marquee ticker';
+    currData = this.config.currData;
 
     var data = this.result;
 
@@ -51,26 +52,39 @@ Module.register("Hako-ticker", {
     //   console.log("getDom():" +  JSON.stringify(data));
     // }
 
-    for (var pair in data.data) {
-      // if (this.config.debugging) {
-      //   console.log("getDom() data array element:" +  pair);
-      // }
+    if (currData) { // If current data exists
+      // We iterate through each of them and do a cross check.
+      console.log("getDom() pushing all pairs with checks");
+      for (var pair in data.data) {
+        for (i = 0; i < currData.length; i++) {
+          // TODO: PERFORM NOT FOUND CHECKS
+          if (currData[i].getName() == pair.getName()) {
+            currData[i].setBuyPrice(data.data[pair]["buy_price"]);
+            currData[i].setSellPrice(data.data[pair]["sell_price"]);
+            break;
+          }
+        }
+      }  
+    } else {
+       // Else we perform an alternate process and add the pairs in
+       console.log("getDom() pushing all pairs unconditionally");
 
-      if (this.config.debugging) {
-        console.log("getDom() pair object:" +  data.data[pair]);
-      }
-      
-      var pair = new Pair(pair, data.data[pair]["buy_price"], data.data[pair]["sell_price"]);
-      
-      if (this.config.debugging) {
-        console.log("getDom() pair object:" +  pair.getName());
-      }
-      
-      if (currData) { // If current data exists
-        // We iterate through each of them and do a cross check.
-      } else {
-        // Else we perform an alternate process and add the pairs in
+      for (var pair in data.data) {
+        // if (this.config.debugging) {
+        //   console.log("getDom() data array element:" +  pair);
+        // }
+
+        // if (this.config.debugging) {
+        //   console.log("getDom() pair object:" +  data.data[pair]);
+        // }
         
+        var pair = new Pair(pair, data.data[pair]["buy_price"], data.data[pair]["sell_price"]);
+        
+        if (this.config.debugging) {
+          console.log("getDom() pair object:" +  pair.getName());
+        }
+        
+        currData.push(pair);
       }
     }
 
@@ -78,7 +92,7 @@ Module.register("Hako-ticker", {
     // var exchange = this.config.exchange;
     // var fiat = this.config.fiat;
     // var fiatSymbol = this.config.fiatTable[fiat].symbol;
-    var lastPrice = 'UOB is supporting u =)'; //data.last
+    var lastPrice = 'Faster, Bank of Choina gonna make u do more work =/'; //data.last
     // if (this.config.showBefore == null) {
     //   var showBefore = this.config.exchange;
     // } else {
