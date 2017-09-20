@@ -23,7 +23,6 @@ Module.register("Hako-ticker", {
   getDom: function() {
     var wrapper = document.createElement("marquee");
     wrapper.className = 'medium bright';
-    wrapper.className = 'ticker';
     
     var currentData = this.currData;
 
@@ -39,6 +38,7 @@ Module.register("Hako-ticker", {
           // TODO: PERFORM NOT FOUND CHECKS
           if (currentData[i].name == pair) {
             // If the last price is lower than the latest price
+            console.log("Old buy price for " + currentData[i].name + " : " + currentData[i].buyprice);
             if ((currentData[i].buyprice - data.data[pair]["buy_price"]) < 0) {
               // It went up! =D
               console.log("Bull check: " + (currentData[i].buyprice - data.data[pair]["buy_price"]) < 0);
@@ -92,12 +92,11 @@ Module.register("Hako-ticker", {
           case 0: // Down
             currentPairElement.className = 'down';
             break;
-          case 1: // Nothing
-            break;
           case 2: // Up
             currentPairElement.className = 'up';
             break;
           default:
+          currentPairElement.className = 'ticker';
             break;
         }
 
