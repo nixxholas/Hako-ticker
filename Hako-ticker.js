@@ -52,10 +52,10 @@ Module.register("Hako-ticker", {
 
     if (currentData) { // If current data exists
       // We iterate through each of them and do a cross check.
-      console.log("getDom(): pushing all pairs with checks");
+      //console.log("getDom(): pushing all pairs with checks");
       for (var pair in data.data) {
-        console.log("getDom() within update for loop");
-        for (i = 0; i < currentData.length; i++) {
+        //console.log("getDom() within update for loop");
+        for (var i = 0; i < currentData.length; i++) {
           console.log("getDom() update loop count: " + i);
           // TODO: PERFORM NOT FOUND CHECKS
           if (currentData[i].name == pair) {
