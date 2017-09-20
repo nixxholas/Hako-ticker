@@ -43,6 +43,13 @@ Module.register("Hako-ticker", {
     if (this.config.debugging) {
       console.log("getDom():" +  JSON.stringify(data));
     }
+
+    for (i = 0; i < data["data"].length; i++) {
+      if (this.config.debugging) {
+        console.log("getDom() data array element:" +  data["data"][i]);
+      }
+    }
+
     var symbolElement =  document.createElement("span");
     // var exchange = this.config.exchange;
     // var fiat = this.config.fiat;
