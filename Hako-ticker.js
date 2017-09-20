@@ -41,18 +41,18 @@ Module.register("Hako-ticker", {
     var data = this.result;
 
     if (this.config.debugging) {
-      Log.log("getDom():" +  JSON.stringify(data));
+      console.log("getDom():" +  JSON.stringify(data));
     }
     var symbolElement =  document.createElement("span");
-    var exchange = this.config.exchange;
-    var fiat = this.config.fiat;
-    var fiatSymbol = this.config.fiatTable[fiat].symbol;
+    // var exchange = this.config.exchange;
+    // var fiat = this.config.fiat;
+    // var fiatSymbol = this.config.fiatTable[fiat].symbol;
     var lastPrice = 'BTCUSD IS NOW 4000000.39'; //data.last
-    if (this.config.showBefore == null) {
-      var showBefore = this.config.exchange;
-    } else {
-      var showBefore = this.config.showBefore
-    }
+    // if (this.config.showBefore == null) {
+    //   var showBefore = this.config.exchange;
+    // } else {
+    //   var showBefore = this.config.showBefore
+    // }
     if (lastPrice) {
       //symbolElement.innerHTML = showBefore + ' ' + fiatSymbol;
       //symbolElement.innerHTML = 'BTCUSD IS NOW 4000000.39';
