@@ -33,9 +33,9 @@ Module.register("Hako-ticker", {
   },
 
   getDom: function() {
-    var wrapper = document.createElement("ticker");
+    var wrapper = document.createElement("marquee");
     wrapper.className = 'medium bright';
-    wrapper.className = 'marquee ticker';
+    wrapper.className = 'ticker';
     
     var currentData = this.currData;
 
