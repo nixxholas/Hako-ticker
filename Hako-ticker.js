@@ -39,13 +39,13 @@ Module.register("Hako-ticker", {
           if (currentData[i].name == pair) {
             // If the last price is lower than the latest price
             console.log("Old buy price for " + currentData[i].name + " : " + currentData[i].buyprice);
-            if ((currentData[i].buyprice - data.data[pair]["buy_price"]) < 0) {
+            if ((data.data[pair]["buy_price"] - currentData[i].buyprice) > 0) {
               // It went up! =D
-              console.log("Bull check: " + (currentData[i].buyprice - data.data[pair]["buy_price"]) < 0);
+              console.log("Bull check: " + (data.data[pair]["buy_price"] - currentData[i].buyprice) > 0);
               currentData[i].status = 2;
-            } else if ((currentData[i].buyprice - data.data[pair]["buy_price"]) > 0) {
+            } else if ((data.data[pair]["buy_price"] - currentData[i].buyprice) < 0) {
               // It went down =(
-              console.log("Bear check: " + (currentData[i].buyprice - data.data[pair]["buy_price"]) > 0);
+              console.log("Bear check: " + (data.data[pair]["buy_price"] - currentData[i].buyprice) < 0);
               currentData[i].status = 0;
             } else {
               currentData[i].status = 1; // Neutral then
