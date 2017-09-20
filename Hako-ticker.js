@@ -1,106 +1,86 @@
-
 'use strict';
-
 
 Module.register("Hako-ticker", {
 
-    result: [],
-	// Default module config.
-	defaults: {
-		stocks: '.DJI,MSFT,AAPL,GOOG,INTC,CICS,TSLA,FB',
-        updateInterval: 37000
-	},
+  result: {},
+  defaults: {
+    fiat: 'usd',
+    showBefore: null,
+    exchange: 'bitstamp',
+    updateInterval: 60000,
 
-    getStyles: function() {
-		return ["Hako-ticker.css"];
-	},
+    // Used to work out url and symbols
+    fiatTable: {
+      usd: {
+        symbol: '$',
+        exchangeCode: 'btcusd'
+      },
+      eur: {
+        symbol: '€',
+        exchangeCode: 'btceur'
+      }
+    }
+  },
 
-    start: function() { 
-        this.getStocks();
-        this.scheduleUpdate();
-    },
+  getStyles: function() {
+    return ["MMM-bitcoin.css"];
+  },
 
-	// Override dom generator.
-	getDom: function() {
+  start: function() {
+    this.getTickers();
+    this.scheduleUpdate();
+  },
 
-        var wrapper = document.createElement("marquee");
-        wrapper.className = 'medium bright';
-        
-        var count = 0;
+  getDom: function() {
+    var wrapper = document.createElement("ticker");
+    wrapper.className = 'medium bright';
+    wrapper.className = 'ticker';
 
-        var _this = this;
+    var data = this.result;
+    var symbolElement =  document.createElement("span");
+    var exchange = this.config.exchange;
+    var fiat = this.config.fiat;
+    var fiatSymbol = this.config.fiatTable[fiat].symbol;
+    var lastPrice = data.last;
+    if (this.config.showBefore == null) {
+      var showBefore = this.config.exchange;
+    } else {
+      var showBefore = this.config.showBefore
+    }
+    if (lastPrice) {
+      symbolElement.innerHTML = showBefore + ' ' + fiatSymbol;
+      wrapper.appendChild(symbolElement);
+      var priceElement = document.createElement("span");
+      priceElement.innerHTML = lastPrice;
+      wrapper.appendChild(priceElement);
+    }
+    return wrapper;
+  },
 
-        if (this.result.length > 0){
-            this.result.forEach(function(stock) {
-                var symbolElement =  document.createElement("span");
-                var symbol = stock.t;
-                var lastPrice = stock.l;
-                var changePercentage = stock.cp;
-                var lastClosePrice = stock.pcls_fix;
-                var lastPriceFix = stock.l_fix;
+  scheduleUpdate: function(delay) {
+    var nextLoad = this.config.updateInterval;
+    if (typeof delay !== "undefined" && delay >= 0) {
+      nextLoad = delay;
+    }
 
-                symbolElement.innerHTML = symbol + ' '; 
-                wrapper.appendChild(symbolElement);
+    var self = this;
+    setInterval(function() {
+      self.getTickers();
+    }, nextLoad);
+  },
 
-                var priceElement = document.createElement("span");
+  getTickers: function () {
+    var fiat = this.config.fiat;
+    var url = 'https://www.bitstamp.net/api/v2/ticker/' + this.config.fiatTable[fiat].exchangeCode + '/';
+    this.sendSocketNotification('GET_TICKERS', url);
+  },
 
-                priceElement.innerHTML = lastPrice;
-
-                var changeElement = document.createElement("span");
-                if (changePercentage > 0)
-                    changeElement.className = "up";
-                else 
-                    changeElement.className = "down";
-
-                var change = Math.round(Math.abs(lastPriceFix - lastClosePrice), -2);
-
-                changeElement.innerHTML = " " + _this.roundValue(Math.abs(lastPriceFix - lastClosePrice));
-
-                var divider = document.createElement("span"); 
-                
-                if (count < _this.result.length - 1)
-                    divider.innerHTML = '  •  ';
-
-                wrapper.appendChild(priceElement);
-
-                wrapper.appendChild(changeElement);
-
-                wrapper.appendChild(divider);
-                count++;
-            });
-
-        }
-
-        return wrapper;
-	},
-
-    scheduleUpdate: function(delay) {
-		var nextLoad = this.config.updateInterval;
-		if (typeof delay !== "undefined" && delay >= 0) {
-			nextLoad = delay;
-		}
-
-		var self = this;
-		setInterval(function() {
-			self.getStocks();
-		}, nextLoad);
-	},
-
-    roundValue: function(value) {
-       return Math.round(value*100)/100; 
-    },
-
-    getStocks: function () {
-        var url = 'http://finance.google.com/finance/info?client=ig&q=' + this.config.stocks;
-        this.sendSocketNotification('GET_STOCKS', url);
-    },
-
-
-    socketNotificationReceived: function(notification, payload) {
-        if (notification === "STOCKS_RESULT") {
-            this.result = payload;
-            this.updateDom(self.config.fadeSpeed);
-        }    
-    },
+  socketNotificationReceived: function(notification, payload) {
+    if (notification === "TICKERS_RESULT") {
+      var self = this;
+      this.result = payload;
+      this.updateDom(self.config.fadeSpeed);
+    }
+  },
 
 });
