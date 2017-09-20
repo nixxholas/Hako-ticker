@@ -1,11 +1,30 @@
+.marquee
+{
+    width: 100%;
+    margin: 0 auto;
+    overflow: visible;
+    white-space: nowrap;
+    /* box-sizing: border-box; */
+    animation: marquee 3s linear infinite;
+    -webkit-animation: marquee 3s linear infinite;
+}
+
 .ticker {
+  font-size: 96px;
   color: white;
 }
 
 .down {
+  font-size: 96px;
   color: red;
 }
 
 .up {
+  font-size: 96px;
   color: green;
+}
+
+@keyframes marquee {
+  0% { left: 0; }
+  100% { left: -100%; }
 }

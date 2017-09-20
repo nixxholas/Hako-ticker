@@ -1,12 +1,14 @@
-'use strict';
-
 Module.register("Hako-ticker", {
 
+  hakoallapi: "https://coinhako.com/api/v1/price/all_prices",
   result: {},
+  currData: [],
   defaults: {
-    updateInterval: 30000,
-	  showHighLow: true,
-    highLowColor: true
+    debugging: true,
+    fiat: 'usd',
+    showBefore: null,
+    exchange: 'bitstamp',
+    updateInterval: 600000,
   },
 
   getStyles: function() {
@@ -14,55 +16,123 @@ Module.register("Hako-ticker", {
   },
 
   start: function() {
-    console.log("Hako-ticker.js: start function running");
     this.getTickers();
     this.scheduleUpdate();
   },
 
   getDom: function() {
-    console.log("Hako-ticker.js: getDom function running");
-    var wrapper = document.createElement("ticker");
+    var wrapper = document.createElement("marquee");
     wrapper.className = 'medium bright';
     wrapper.className = 'ticker';
+    
+    var currentData = this.currData;
 
     var data = this.result;
 
-    var symbolElement =  document.createElement("span");
-    var breakElement =  document.createElement("br");
-    
-    for (i = 0; i < data.length; i++) {
-      var symbol = data[i].pair_name;
-      //var lastPrice = data.buy_price;
-      var highPrice = data[i].buy_price;
-      var lowPrice = data[i].sell_price;
-    
-      var priceElement = document.createElement("span");
-      var lowElement = document.createElement("span");
-      var highElement = document.createElement("span");
-      
-      symbolElement.innerHTML = symbol + ' $';
-      wrapper.appendChild(symbolElement);
-      priceElement.innerHTML = highPrice;
-      wrapper.appendChild(priceElement);
-      wrapper.appendChild(breakElement);
-      lowElement.className = 'small';
-      lowElement.innerHTML = '$' + lowPrice + '&nbsp&nbsp;&nbsp;';
-        
-      highElement.className = 'small';
-      highElement.innerHTML = '$' + highPrice;
-            
-      lowElement.className = 'small down';
-      highElement.className = 'small up';
-            
-      wrapper.appendChild(lowElement);
-      wrapper.appendChild(highElement);  
+    if (currentData.length > 0) { // If current data exists
+      // We iterate through each of them and do a cross check.
+      //console.log("getDom(): pushing all pairs with checks");
+      for (var pair in data.data) {
+        //console.log("getDom() within update for loop");
+        for (var i = 0; i < currentData.length; i++) {
+          //console.log("getDom() update loop count: " + i);
+          // TODO: PERFORM NOT FOUND CHECKS
+          if (currentData[i].name == pair) {
+            // If the last price is lower than the latest price
+            if ((currentData[i].buyprice - data.data[pair]["buy_price"]) < 0) {
+              // It went up! =D
+              currentData[i].status = 2;
+            } else if ((currentData[i].buyprice - data.data[pair]["buy_price"]) > 0) {
+              // It went down =(
+              currentData[i].status = 0;
+            } else {
+              currentData[i].status = 1; // Neutral then
+            }
+
+            currentData[i].buyprice = data.data[pair]["buy_price"];
+            currentData[i].sellprice = data.data[pair]["sell_price"];
+            break;
+          }
+        }
+      }  
+    } else {
+       // Else we perform an alternate process and add the pairs in
+       //console.log("getDom() pushing all pairs unconditionally");
+
+      for (var pair in data.data) {
+        this.currData.push({
+          name: pair,
+          buyprice: data.data[pair]["buy_price"],
+          sellprice: data.data[pair]["sell_price"],
+          status: 1, // 0 - Down, 1 - Initial, 2 - Up
+        });
+      }
+
+      //console.log("Unconditional push complete. Data: " + currentData);
     }
-    
+
+    // CoinHako's BTC first
+    var coinhakoBTCElement = document.createElement("span");
+    var coinhakoBTCText = '';
+
+    for (var i = 0; i < currentData.length; i++) {
+      if (currentData[i].name.indexOf("BTC") !== -1) {
+        console.log("Found a BTC pair: " + currentData[i].name);
+
+        var currentPairText = '';
+        if (i > 0) {
+          currentPairText += "\t";
+        }
+      
+        var currentPairElement = document.createElement("span");
+        switch (i) {
+          case 0: // Down
+            currentPairElement.className = 'down';
+            break;
+          case 1: // Nothing
+            break;
+          case 2: // Up
+            currentPairElement.className = 'up';
+            break;
+          default:
+            break;
+        }
+
+        currentPairText = currentData[i].name + ' ' + currentData[i].buyprice;
+        currentPairElement.innerHTML = currentPairText;
+        if (currentPairText) {
+          coinhakoBTCElement.appendChild(currentPairElement);
+        }
+      }
+    }
+
+    wrapper.appendChild(coinhakoBTCElement);
+
+    // CoinHako's ETH
+
+    //var symbolElement =  document.createElement("span");
+    // var exchange = this.config.exchange;
+    // var fiat = this.config.fiat;
+    // var fiatSymbol = this.config.fiatTable[fiat].symbol;
+    //var lastPrice = 'I dare u to ping flood 192.168.2.202.'; //data.last
+    // if (this.config.showBefore == null) {
+    //   var showBefore = this.config.exchange;
+    // } else {
+    //   var showBefore = this.config.showBefore
+    // }
+
+    //if (coinhakoBTCText) {
+      //symbolElement.innerHTML = showBefore + ' ' + fiatSymbol;
+      //symbolElement.innerHTML = 'BTCUSD IS NOW 4000000.39';
+      //wrapper.appendChild(symbolElement);
+      //var priceElement = document.createElement("span");
+      //coinhakoBTCElement.innerHTML = coinhakoBTCText;
+    //}
+
     return wrapper;
   },
 
   scheduleUpdate: function(delay) {
-    console.log("Hako-ticker.js: scheduleUpdate function running");
     var nextLoad = this.config.updateInterval;
     if (typeof delay !== "undefined" && delay >= 0) {
       nextLoad = delay;
@@ -75,15 +145,13 @@ Module.register("Hako-ticker", {
   },
 
   getTickers: function () {
-    console.log("Hako-ticker.js: getTickers");
-    var url = 'https://www.coinhako.com/api/v1/wallet/supported_currencies';
-	  this.sendSocketNotification('GET_DATA', url);
+    var url = 'https://coinhako.com/api/v1/price/all_prices';
+    this.sendSocketNotification('GET_TICKERS', url);
   },
 
-  socketNotificationReceived: function(notification, payload, payload2) {
-    console.log("Hako-ticker.js: socketNotificationReceived");
-    console.log("Hako-ticker.js notification string: " + notification);
-    if (notification === "DATA_RESULT") {
+  socketNotificationReceived: function(notification, payload) {
+    if (notification === "TICKERS_RESULT") {
+      var self = this;
       this.result = payload;
       this.updateDom(self.config.fadeSpeed);
     }
