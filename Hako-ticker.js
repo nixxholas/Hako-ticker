@@ -39,10 +39,6 @@ Module.register("Hako-ticker", {
     
     var currentData = this.currData;
 
-    // if (this.config.debugging) {
-    //   console.log("getDom():" + currentData);
-    // }
-
     var data = this.result;
 
     if (currentData.length > 0) { // If current data exists
@@ -73,17 +69,9 @@ Module.register("Hako-ticker", {
       }  
     } else {
        // Else we perform an alternate process and add the pairs in
-       console.log("getDom() pushing all pairs unconditionally");
+       //console.log("getDom() pushing all pairs unconditionally");
 
       for (var pair in data.data) {
-        // if (this.config.debugging) {
-        //   console.log("getDom() data array element:" +  pair);
-        // }
-
-        // if (this.config.debugging) {
-        //   console.log("getDom() pair object:" +  data.data[pair]);
-        // }
-        
         this.currData.push({
           name: pair,
           buyprice: data.data[pair]["buy_price"],
@@ -92,7 +80,7 @@ Module.register("Hako-ticker", {
         });
       }
 
-      console.log("Unconditional push complete. Data: " + currentData);
+      //console.log("Unconditional push complete. Data: " + currentData);
     }
 
     // CoinHako's BTC first
