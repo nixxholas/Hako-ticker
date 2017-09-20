@@ -50,7 +50,7 @@ Module.register("Hako-ticker", {
     }
     if (lastPrice) {
       //symbolElement.innerHTML = showBefore + ' ' + fiatSymbol;
-      symbolElement.innerHTML = 'BTCUSD IS NOW 4000000';
+      symbolElement.innerHTML = 'BTCUSD IS NOW 4000000.39';
       wrapper.appendChild(symbolElement);
       var priceElement = document.createElement("span");
       priceElement.innerHTML = lastPrice;
