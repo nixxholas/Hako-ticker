@@ -90,7 +90,7 @@ Module.register("Hako-ticker", {
         currentPairText = currentData[i].name + '  ' + currentData[i].buyprice;
       
         var currentPairElement = document.createElement("span");
-        switch (i) {
+        switch (currentData[i].status) {
           case 0: // Down
             currentPairElement.className = 'down';
             break;
