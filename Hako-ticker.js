@@ -83,7 +83,7 @@ Module.register("Hako-ticker", {
         //   console.log("getDom() pair object:" +  data.data[pair]);
         // }
         
-        let pair = new Pair(pair, data.data[pair]["buy_price"], data.data[pair]["sell_price"]);
+        var pair = new Pair(pair, data.data[pair]["buy_price"], data.data[pair]["sell_price"]);
         
         if (this.config.debugging) {
           console.log("getDom() pair object:" +  pair.getName());
@@ -97,7 +97,7 @@ Module.register("Hako-ticker", {
     // var exchange = this.config.exchange;
     // var fiat = this.config.fiat;
     // var fiatSymbol = this.config.fiatTable[fiat].symbol;
-    var lastPrice = 'Faster, Bank of Choina gonna make u do more work =/'; //data.last
+    var lastPrice = 'You have 500 withdrawals to go =/'; //data.last
     // if (this.config.showBefore == null) {
     //   var showBefore = this.config.exchange;
     // } else {
