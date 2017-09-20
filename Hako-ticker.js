@@ -57,10 +57,10 @@ Module.register("Hako-ticker", {
       // }
 
       if (this.config.debugging) {
-        console.log("getDom() pair object:" +  data[pair]);
+        console.log("getDom() pair object:" +  data.data[pair]);
       }
       
-      var pair = new Pair(pair, data[pair]["buy_price"], data[pair]["sell_price"]);
+      var pair = new Pair(pair, data.data[pair]["buy_price"], data.data[pair]["sell_price"]);
       
       if (this.config.debugging) {
         console.log("getDom() pair object:" +  pair.getName());
