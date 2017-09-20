@@ -35,7 +35,7 @@ Module.register("Hako-ticker", {
   getDom: function() {
     var wrapper = document.createElement("ticker");
     wrapper.className = 'medium bright';
-    wrapper.className = 'ticker marquee';
+    wrapper.className = 'ticker';
 
     var data = this.result;
     var symbolElement =  document.createElement("span");
@@ -53,6 +53,7 @@ Module.register("Hako-ticker", {
       //symbolElement.innerHTML = 'BTCUSD IS NOW 4000000.39';
       //wrapper.appendChild(symbolElement);
       var priceElement = document.createElement("span");
+      priceElement.className = 'marquee';
       priceElement.innerHTML = lastPrice;
       wrapper.appendChild(priceElement);
     }
