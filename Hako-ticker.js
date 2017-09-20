@@ -54,7 +54,9 @@ Module.register("Hako-ticker", {
       // We iterate through each of them and do a cross check.
       console.log("getDom(): pushing all pairs with checks");
       for (var pair in data.data) {
+        console.log("getDom() within update for loop");
         for (i = 0; i < currentData.length; i++) {
+          console.log("getDom() update loop count: " + i);
           // TODO: PERFORM NOT FOUND CHECKS
           if (currentData[i].name == pair) {
             // If the last price is lower than the latest price
@@ -102,7 +104,7 @@ Module.register("Hako-ticker", {
     // var exchange = this.config.exchange;
     // var fiat = this.config.fiat;
     // var fiatSymbol = this.config.fiatTable[fiat].symbol;
-    var lastPrice = 'You have 500 withdrawals to go =/'; //data.last
+    var lastPrice = 'I dare u to ping flood 192.168.2.202.'; //data.last
     // if (this.config.showBefore == null) {
     //   var showBefore = this.config.exchange;
     // } else {
