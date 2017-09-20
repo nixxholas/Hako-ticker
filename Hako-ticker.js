@@ -5,6 +5,7 @@ Module.register("Hako-ticker", {
   hakoallapi: "https://coinhako.com/api/v1/price/all_prices",
   result: {},
   defaults: {
+    debugging: true,
     fiat: 'usd',
     showBefore: null,
     exchange: 'bitstamp',
@@ -38,7 +39,10 @@ Module.register("Hako-ticker", {
     wrapper.className = 'marquee ticker';
 
     var data = this.result;
-    console.log("getDom():" + JSON.stringify(data));
+
+    if (this.config.debugging) {
+      Log.log("getDom():" +  JSON.stringify(data));
+    }
     var symbolElement =  document.createElement("span");
     var exchange = this.config.exchange;
     var fiat = this.config.fiat;
