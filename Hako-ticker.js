@@ -41,14 +41,17 @@ Module.register("Hako-ticker", {
             // If the last price is lower than the latest price
             if ((currentData[i].buyprice - data.data[pair]["buy_price"]) < 0) {
               // It went up! =D
+              console.log("Bull check: " + (currentData[i].buyprice - data.data[pair]["buy_price"]) < 0);
               currentData[i].status = 2;
             } else if ((currentData[i].buyprice - data.data[pair]["buy_price"]) > 0) {
               // It went down =(
+              console.log("Bear check: " + (currentData[i].buyprice - data.data[pair]["buy_price"]) > 0);
               currentData[i].status = 0;
             } else {
               currentData[i].status = 1; // Neutral then
             }
 
+            // Update the prices thereafter
             currentData[i].buyprice = data.data[pair]["buy_price"];
             currentData[i].sellprice = data.data[pair]["sell_price"];
             break;
@@ -77,7 +80,7 @@ Module.register("Hako-ticker", {
 
     for (var i = 0; i < currentData.length; i++) {
       if (currentData[i].name.indexOf("BTC") !== -1) {
-        console.log("Found a BTC pair: " + currentData[i].name);
+        //console.log("Found a BTC pair: " + currentData[i].name);
 
         var currentPairText = '';
         if (i > 0) {
