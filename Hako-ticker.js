@@ -9,18 +9,6 @@ Module.register("Hako-ticker", {
     showBefore: null,
     exchange: 'bitstamp',
     updateInterval: 600000,
-
-    // Used to work out url and symbols
-    fiatTable: {
-      usd: {
-        symbol: '$',
-        exchangeCode: 'btcusd'
-      },
-      eur: {
-        symbol: '€',
-        exchangeCode: 'btceur'
-      }
-    }
   },
 
   getStyles: function() {
@@ -90,8 +78,12 @@ Module.register("Hako-ticker", {
     for (var i = 0; i < currentData.length; i++) {
       if (currentData[i].name.indexOf("BTC") !== -1) {
         console.log("Found a BTC pair: " + currentData[i].name);
-        //if (i != 0) coinhakoBTCText += "\t";
 
+        var currentPairText = '';
+        if (i > 0) {
+          currentPairText += "\t\t";
+        }
+      
         var currentPairElement = document.createElement("span");
         switch (i) {
           case 0: // Down
@@ -107,19 +99,21 @@ Module.register("Hako-ticker", {
         }
 
         currentPairElement.innerHTML = currentData[i].name + ' ' + currentData[i].buyprice;
-        coinhakoBTCElement.appendChild(currentPairElement);
+        if (currentPairText) {
+          coinhakoBTCElement.appendChild(currentPairElement);
+        }
       }
     }
 
     wrapper.appendChild(coinhakoBTCElement);
-    
+
     // CoinHako's ETH
 
-    var symbolElement =  document.createElement("span");
+    //var symbolElement =  document.createElement("span");
     // var exchange = this.config.exchange;
     // var fiat = this.config.fiat;
     // var fiatSymbol = this.config.fiatTable[fiat].symbol;
-    var lastPrice = 'I dare u to ping flood 192.168.2.202.'; //data.last
+    //var lastPrice = 'I dare u to ping flood 192.168.2.202.'; //data.last
     // if (this.config.showBefore == null) {
     //   var showBefore = this.config.exchange;
     // } else {
