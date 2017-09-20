@@ -42,7 +42,7 @@ Module.register("Hako-ticker", {
     var exchange = this.config.exchange;
     var fiat = this.config.fiat;
     var fiatSymbol = this.config.fiatTable[fiat].symbol;
-    var lastPrice = data.last;
+    var lastPrice = 'BTCUSD IS NOW 4000000.39'; //data.last
     if (this.config.showBefore == null) {
       var showBefore = this.config.exchange;
     } else {
@@ -50,8 +50,8 @@ Module.register("Hako-ticker", {
     }
     if (lastPrice) {
       //symbolElement.innerHTML = showBefore + ' ' + fiatSymbol;
-      symbolElement.innerHTML = 'BTCUSD IS NOW 4000000.39';
-      wrapper.appendChild(symbolElement);
+      //symbolElement.innerHTML = 'BTCUSD IS NOW 4000000.39';
+      //wrapper.appendChild(symbolElement);
       var priceElement = document.createElement("span");
       priceElement.innerHTML = lastPrice;
       wrapper.appendChild(priceElement);
