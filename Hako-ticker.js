@@ -81,7 +81,7 @@ Module.register("Hako-ticker", {
 
         var currentPairText = '';
         if (i > 0) {
-          currentPairText += "\t\t";
+          currentPairText += "\t";
         }
       
         var currentPairElement = document.createElement("span");

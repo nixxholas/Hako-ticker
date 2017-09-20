@@ -15,10 +15,12 @@
 }
 
 .down {
+  font-size: 96px;
   color: red;
 }
 
 .up {
+  font-size: 96px;
   color: green;
 }
 
