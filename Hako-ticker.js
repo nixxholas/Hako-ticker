@@ -89,6 +89,8 @@ Module.register("Hako-ticker", {
           sellprice: data.data[pair]["sell_price"]
         });
       }
+
+      console.log("Unconditional push complete. Data: " + currentData);
     }
 
     var symbolElement =  document.createElement("span");
