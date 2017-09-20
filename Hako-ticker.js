@@ -47,9 +47,9 @@ Module.register("Hako-ticker", {
 
     var data = this.result;
 
-    if (this.config.debugging) {
-      console.log("getDom():" +  JSON.stringify(data));
-    }
+    // if (this.config.debugging) {
+    //   console.log("getDom():" +  JSON.stringify(data));
+    // }
 
     for (var pair in data.data) {
       if (this.config.debugging) {
