@@ -38,16 +38,15 @@ Module.register("Hako-ticker", {
     wrapper.className = 'medium bright';
     wrapper.className = 'marquee ticker';
 
-    var data = JSON.parse(this.result);
+    var data = this.result;
 
     if (this.config.debugging) {
       console.log("getDom():" +  JSON.stringify(data));
     }
 
-    var i;
-    for (i = 0; i < data["data"].length; i++) {
+    for (var pair in data.data) {
       if (this.config.debugging) {
-        console.log("getDom() data array element:" +  data["data"][i]);
+        console.log("getDom() data array element:" +  pair);
       }
     }
 
