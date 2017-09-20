@@ -24,6 +24,11 @@
   color: green;
 }
 
+span .ticker {
+  margin-left: 24px;
+  margin-right: 24px;
+}
+
 @keyframes marquee {
   0% { left: 0; }
   100% { left: -100%; }
