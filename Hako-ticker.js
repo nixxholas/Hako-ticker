@@ -22,7 +22,7 @@ Module.register("Hako-ticker", {
 
   getDom: function() {
     var wrapper = document.createElement("marquee");
-    wrapper.className = 'medium bright';
+    wrapper.className = 'bright';
     
     var currentData = this.currData;
 
@@ -84,7 +84,7 @@ Module.register("Hako-ticker", {
 
         var currentPairText = '';
         if (i > 0) {
-          currentPairText += "\t";
+          currentPairText += " | ";
         }
 
         currentPairText = currentData[i].name + '  ' + currentData[i].buyprice;
