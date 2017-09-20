@@ -23,12 +23,6 @@ Module.register("Hako-ticker", {
     }
   },
 
-  getScripts: function() {
-      return [
-        this.file('Pair.js')
-      ]
-  },
-
   getStyles: function() {
     return ["Hako-ticker.css"];
   },
@@ -42,7 +36,7 @@ Module.register("Hako-ticker", {
     var wrapper = document.createElement("ticker");
     wrapper.className = 'medium bright';
     wrapper.className = 'marquee ticker';
-    let currentData = this.currData;
+    var currentData = this.currData;
 
     // if (this.config.debugging) {
     //   console.log("getDom():" + currentData);
