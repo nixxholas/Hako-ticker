@@ -36,7 +36,9 @@ Module.register("Hako-ticker", {
     var wrapper = document.createElement("ticker");
     wrapper.className = 'medium bright';
     wrapper.className = 'marquee ticker';
+    console.log(this.currData.length);
     var currentData = this.currData;
+    console.log(this.currData.length);
 
     // if (this.config.debugging) {
     //   console.log("getDom():" + currentData);
@@ -49,7 +51,6 @@ Module.register("Hako-ticker", {
       //console.log("getDom(): pushing all pairs with checks");
       for (var pair in data.data) {
         //console.log("getDom() within update for loop");
-        console.log(this.currData.length);
         for (var i = 0; i < currentData.length; i++) {
           console.log("getDom() update loop count: " + i);
           // TODO: PERFORM NOT FOUND CHECKS
