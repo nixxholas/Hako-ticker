@@ -2,6 +2,7 @@
 
 Module.register("Hako-ticker", {
 
+  hakoallapi: "https://coinhako.com/api/v1/price/all_prices",
   result: {},
   defaults: {
     fiat: 'usd',
@@ -48,7 +49,8 @@ Module.register("Hako-ticker", {
       var showBefore = this.config.showBefore
     }
     if (lastPrice) {
-      symbolElement.innerHTML = showBefore + ' ' + fiatSymbol;
+      //symbolElement.innerHTML = showBefore + ' ' + fiatSymbol;
+      symbolElement.innerHTML = 'BTCUSD IS NOW 4000000';
       wrapper.appendChild(symbolElement);
       var priceElement = document.createElement("span");
       priceElement.innerHTML = lastPrice;
