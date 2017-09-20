@@ -23,7 +23,7 @@ Module.register("Hako-ticker", {
   },
 
   getStyles: function() {
-    return ["MMM-bitcoin.css"];
+    return ["Hako-ticker.css"];
   },
 
   start: function() {
