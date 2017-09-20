@@ -95,6 +95,18 @@ Module.register("Hako-ticker", {
       console.log("Unconditional push complete. Data: " + currentData);
     }
 
+    // CoinHako's BTC first
+    var coinhakoBTCElement = document.createElement("span");
+    var coinhakoBTCText = '';
+
+    for (var i = 0; i < currentData.length; i++) {
+      if (currentData[i].name.indexOf("BTC") !== -1) {
+        console.log("Found a BTC pair: " + currentData[i].name);
+      }
+    }
+
+    // CoinHako's ETH
+
     var symbolElement =  document.createElement("span");
     // var exchange = this.config.exchange;
     // var fiat = this.config.fiat;
