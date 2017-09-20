@@ -1,9 +1,8 @@
-let currData = [];
-
 Module.register("Hako-ticker", {
 
   hakoallapi: "https://coinhako.com/api/v1/price/all_prices",
   result: {},
+  currData: [],
   defaults: {
     debugging: true,
     fiat: 'usd',
