@@ -1,9 +1,10 @@
 'use strict';
 
+let currData = new Array();
+
 Module.register("Hako-ticker", {
 
   hakoallapi: "https://coinhako.com/api/v1/price/all_prices",
-  currData: new Array(),
   result: {},
   defaults: {
     debugging: true,
@@ -44,7 +45,7 @@ Module.register("Hako-ticker", {
     var wrapper = document.createElement("ticker");
     wrapper.className = 'medium bright';
     wrapper.className = 'marquee ticker';
-    currData = this.config.currData;
+    currData = this.currData;
 
     var data = this.result;
 
