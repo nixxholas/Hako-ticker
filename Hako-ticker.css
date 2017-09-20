@@ -1,13 +1,12 @@
 .marquee
 {
     width: 100%;
-    /* margin: 0 auto; */
-    margin: auto;
+    margin: 0 auto;
     overflow: visible;
     white-space: nowrap;
     /* box-sizing: border-box; */
-    animation: marquee 50s linear infinite;
-    -webkit-animation: marquee 50s linear infinite;
+    animation: marquee 3s linear infinite;
+    -webkit-animation: marquee 3s linear infinite;
 }
 
 .ticker {

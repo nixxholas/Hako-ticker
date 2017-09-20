@@ -8,7 +8,7 @@ Module.register("Hako-ticker", {
     fiat: 'usd',
     showBefore: null,
     exchange: 'bitstamp',
-    updateInterval: 300000,
+    updateInterval: 600000,
 
     // Used to work out url and symbols
     fiatTable: {
@@ -90,8 +90,24 @@ Module.register("Hako-ticker", {
     for (var i = 0; i < currentData.length; i++) {
       if (currentData[i].name.indexOf("BTC") !== -1) {
         console.log("Found a BTC pair: " + currentData[i].name);
-        if (i != 0) coinhakoBTCText += "\t";
-        coinhakoBTCText += currentData[i].name + ' ' + currentData[i].buyprice;
+        //if (i != 0) coinhakoBTCText += "\t";
+
+        var currentPairElement = document.createElement("span");
+        switch (i) {
+          case 0: // Down
+            currentPairElement.className = 'down';
+            break;
+          case 1: // Nothing
+            break;
+          case 2: // Up
+            currentPairElement.className = 'up';
+            break;
+          default:
+            break;
+        }
+
+        currentPairElement.innerHTML = currentData[i].name + ' ' + currentData[i].buyprice;
+        coinhakoBTCElement.appendChild(currentPairElement);
       }
     }
 
@@ -113,7 +129,7 @@ Module.register("Hako-ticker", {
       //symbolElement.innerHTML = 'BTCUSD IS NOW 4000000.39';
       //wrapper.appendChild(symbolElement);
       //var priceElement = document.createElement("span");
-      coinhakoBTCElement.innerHTML = coinhakoBTCText;
+      //coinhakoBTCElement.innerHTML = coinhakoBTCText;
       wrapper.appendChild(coinhakoBTCElement);
     }
     return wrapper;
