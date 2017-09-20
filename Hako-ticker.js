@@ -86,6 +86,8 @@ Module.register("Hako-ticker", {
         if (i > 0) {
           currentPairText += "\t";
         }
+
+        currentPairText = currentData[i].name + '  ' + currentData[i].buyprice;
       
         var currentPairElement = document.createElement("span");
         switch (i) {
@@ -94,14 +96,15 @@ Module.register("Hako-ticker", {
             break;
           case 2: // Up
             currentPairElement.className = 'up';
+            currentPairText += ' <i class="moon icon"></i>';
             break;
           default:
           currentPairElement.className = 'ticker';
             break;
         }
 
-        currentPairText = currentData[i].name + ' ' + currentData[i].buyprice;
         currentPairElement.innerHTML = currentPairText;
+        
         if (currentPairText) {
           coinhakoBTCElement.appendChild(currentPairElement);
         }
