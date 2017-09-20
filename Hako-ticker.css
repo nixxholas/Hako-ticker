@@ -5,8 +5,8 @@
     overflow: hidden;
     white-space: nowrap;
     box-sizing: border-box;
-    animation: marquee 50s linear infinite;
-    -webkit-animation: marquee 50s linear infinite;
+    animation: marquee 5s linear infinite;
+    -webkit-animation: marquee 5s linear infinite;
 }
 
 .ticker {
