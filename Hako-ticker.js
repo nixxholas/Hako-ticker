@@ -36,9 +36,8 @@ Module.register("Hako-ticker", {
     var wrapper = document.createElement("ticker");
     wrapper.className = 'medium bright';
     wrapper.className = 'marquee ticker';
-    console.log(this.currData.length);
+    
     var currentData = this.currData;
-    console.log(this.currData.length);
 
     // if (this.config.debugging) {
     //   console.log("getDom():" + currentData);
@@ -46,7 +45,7 @@ Module.register("Hako-ticker", {
 
     var data = this.result;
 
-    if (currentData) { // If current data exists
+    if (currentData.length > 0) { // If current data exists
       // We iterate through each of them and do a cross check.
       //console.log("getDom(): pushing all pairs with checks");
       for (var pair in data.data) {
