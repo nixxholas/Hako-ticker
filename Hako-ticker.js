@@ -55,6 +55,7 @@ Module.register("Hako-ticker", {
       //console.log("getDom(): pushing all pairs with checks");
       for (var pair in data.data) {
         //console.log("getDom() within update for loop");
+        console.log(currentData.length);
         for (var i = 0; i < currentData.length; i++) {
           console.log("getDom() update loop count: " + i);
           // TODO: PERFORM NOT FOUND CHECKS
