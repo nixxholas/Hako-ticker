@@ -38,7 +38,7 @@ Module.register("Hako-ticker", {
           // TODO: PERFORM NOT FOUND CHECKS
           if (currentData[i].name == pair) {
             // If the last price is lower than the latest price
-            console.log("Old buy price for " + currentData[i].name + " : " + currentData[i].buyprice);
+            //console.log("Old buy price for " + currentData[i].name + " : " + currentData[i].buyprice);
             if ((data.data[pair]["buy_price"] - currentData[i].buyprice) > 0) {
               // It went up! =D
               console.log("Bull check: " + (data.data[pair]["buy_price"] - currentData[i].buyprice) > 0);
@@ -84,7 +84,7 @@ Module.register("Hako-ticker", {
 
         var currentPairText = '';
         if (i > 0) {
-          currentPairText += " | ";
+          currentPairText += "\t";
         }
 
         currentPairText = currentData[i].name + '  ' + currentData[i].buyprice;
@@ -93,13 +93,15 @@ Module.register("Hako-ticker", {
         switch (currentData[i].status) {
           case 0: // Down
             currentPairElement.className = 'down';
+            currentPairText += ' <i class="caret down icon"></i>';
             break;
           case 2: // Up
             currentPairElement.className = 'up';
             currentPairText += ' <i class="moon icon"></i>';
             break;
           default:
-          currentPairElement.className = 'ticker';
+            currentPairElement.className = 'ticker';
+            currentPairText += ' <i class="minus icon"></i>';
             break;
         }
 
