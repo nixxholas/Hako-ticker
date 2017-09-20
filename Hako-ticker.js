@@ -111,6 +111,8 @@ Module.register("Hako-ticker", {
       }
     }
 
+    wrapper.appendChild(coinhakoBTCElement);
+    
     // CoinHako's ETH
 
     var symbolElement =  document.createElement("span");
@@ -124,14 +126,14 @@ Module.register("Hako-ticker", {
     //   var showBefore = this.config.showBefore
     // }
 
-    if (coinhakoBTCText) {
+    //if (coinhakoBTCText) {
       //symbolElement.innerHTML = showBefore + ' ' + fiatSymbol;
       //symbolElement.innerHTML = 'BTCUSD IS NOW 4000000.39';
       //wrapper.appendChild(symbolElement);
       //var priceElement = document.createElement("span");
       //coinhakoBTCElement.innerHTML = coinhakoBTCText;
-      wrapper.appendChild(coinhakoBTCElement);
-    }
+    //}
+
     return wrapper;
   },
 
