@@ -61,7 +61,7 @@ Module.register("Hako-ticker", {
       for (var pair in data.data) {
         for (i = 0; i < currentData.length; i++) {
           // TODO: PERFORM NOT FOUND CHECKS
-          if (currentData[i].getName() == pair.getName()) {
+          if (currentData[i].name == pair) {
             currentData[i].setBuyPrice(data.data[pair]["buy_price"]);
             currentData[i].setSellPrice(data.data[pair]["sell_price"]);
             break;
@@ -72,7 +72,7 @@ Module.register("Hako-ticker", {
        // Else we perform an alternate process and add the pairs in
        console.log("getDom() pushing all pairs unconditionally");
 
-      for (let pair in data.data) {
+      for (var pair in data.data) {
         // if (this.config.debugging) {
         //   console.log("getDom() data array element:" +  pair);
         // }
