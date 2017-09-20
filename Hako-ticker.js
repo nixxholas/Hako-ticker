@@ -81,7 +81,7 @@ Module.register("Hako-ticker", {
         //   console.log("getDom() pair object:" +  data.data[pair]);
         // }
         
-        currentData.push({
+        this.currData.push({
           name: pair,
           buyprice: data.data[pair]["buy_price"],
           sellprice: data.data[pair]["sell_price"]
