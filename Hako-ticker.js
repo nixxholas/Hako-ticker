@@ -51,7 +51,7 @@ Module.register("Hako-ticker", {
       for (var pair in data.data) {
         //console.log("getDom() within update for loop");
         for (var i = 0; i < currentData.length; i++) {
-          console.log("getDom() update loop count: " + i);
+          //console.log("getDom() update loop count: " + i);
           // TODO: PERFORM NOT FOUND CHECKS
           if (currentData[i].name == pair) {
             // If the last price is lower than the latest price
@@ -102,6 +102,8 @@ Module.register("Hako-ticker", {
     for (var i = 0; i < currentData.length; i++) {
       if (currentData[i].name.indexOf("BTC") !== -1) {
         console.log("Found a BTC pair: " + currentData[i].name);
+        if (i != 0) coinhakoBTCText += "\t";
+        coinhakoBTCText += currentData[i].name + ' ' + currentData[i].buyprice;
       }
     }
 
@@ -118,13 +120,13 @@ Module.register("Hako-ticker", {
     //   var showBefore = this.config.showBefore
     // }
 
-    if (lastPrice) {
+    if (coinhakoBTCText) {
       //symbolElement.innerHTML = showBefore + ' ' + fiatSymbol;
       //symbolElement.innerHTML = 'BTCUSD IS NOW 4000000.39';
       //wrapper.appendChild(symbolElement);
-      var priceElement = document.createElement("span");
-      priceElement.innerHTML = lastPrice;
-      wrapper.appendChild(priceElement);
+      //var priceElement = document.createElement("span");
+      coinhakoBTCElement.innerHTML = coinhakoBTCText;
+      wrapper.appendChild(coinhakoBTCElement);
     }
     return wrapper;
   },
