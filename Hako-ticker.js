@@ -23,7 +23,7 @@ Module.register("Hako-ticker", {
     var wrapper = document.createElement("marquee");
     wrapper.className = 'bright';
     
-    var data = JSON.parse(this.result);
+    var data = this.result;
 
     if (this.currData.length > 0) { // If current data exists
       // We iterate through each of them and do a cross check.
