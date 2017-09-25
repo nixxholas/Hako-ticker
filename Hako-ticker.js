@@ -7,8 +7,7 @@ Module.register("Hako-ticker", {
     debugging: true,
     fiat: 'usd',
     showBefore: null,
-    exchange: 'bitstamp',
-    updateInterval: 600000,
+    updateInterval: 30000,
   },
 
   getStyles: function() {
@@ -24,36 +23,34 @@ Module.register("Hako-ticker", {
     var wrapper = document.createElement("marquee");
     wrapper.className = 'bright';
     
-    var currentData = this.currData;
-
     var data = this.result;
 
-    if (currentData.length > 0) { // If current data exists
+    if (this.currData.length > 0) { // If current data exists
       // We iterate through each of them and do a cross check.
       //console.log("getDom(): pushing all pairs with checks");
       for (var pair in data.data) {
         //console.log("getDom() within update for loop");
-        for (var i = 0; i < currentData.length; i++) {
+        for (var i = 0; i < this.currData.length; i++) {
           //console.log("getDom() update loop count: " + i);
           // TODO: PERFORM NOT FOUND CHECKS
-          if (currentData[i].name == pair) {
+          if (this.currData[i].name == pair) {
             // If the last price is lower than the latest price
             //console.log("Old buy price for " + currentData[i].name + " : " + currentData[i].buyprice);
-            if ((data.data[pair]["buy_price"] - currentData[i].buyprice) > 0) {
+            if ((data.data[pair]["buy_price"] - this.currData[i].buyprice) > 0) {
               // It went up! =D
-              console.log("Bull check: " + (data.data[pair]["buy_price"] - currentData[i].buyprice) > 0);
-              currentData[i].status = 2;
-            } else if ((data.data[pair]["buy_price"] - currentData[i].buyprice) < 0) {
+              console.log("Bull check: " + (data.data[pair]["buy_price"] - this.currData[i].buyprice) > 0);
+              this.currData[i].status = 2;
+            } else if ((data.data[pair]["buy_price"] - this.currData[i].buyprice) < 0) {
               // It went down =(
-              console.log("Bear check: " + (data.data[pair]["buy_price"] - currentData[i].buyprice) < 0);
-              currentData[i].status = 0;
+              console.log("Bear check: " + (data.data[pair]["buy_price"] - this.currData[i].buyprice) < 0);
+              this.currData[i].status = 0;
             } else {
-              currentData[i].status = 1; // Neutral then
+              this.currData[i].status = 1; // Neutral then
             }
 
             // Update the prices thereafter
-            currentData[i].buyprice = data.data[pair]["buy_price"];
-            currentData[i].sellprice = data.data[pair]["sell_price"];
+            this.currData[i].buyprice = data.data[pair]["buy_price"];
+            this.currData[i].sellprice = data.data[pair]["sell_price"];
             break;
           }
         }
@@ -76,10 +73,8 @@ Module.register("Hako-ticker", {
 
     // CoinHako's BTC first
     var coinhakoBTCElement = document.createElement("span");
-    var coinhakoBTCText = '';
-
-    for (var i = 0; i < currentData.length; i++) {
-      if (currentData[i].name.indexOf("BTC") !== -1) {
+    for (var i = 0; i < this.currData.length; i++) {
+      if (this.currData[i].name.indexOf("BTC") !== -1) {
         //console.log("Found a BTC pair: " + currentData[i].name);
 
         var currentPairText = '';
@@ -87,10 +82,10 @@ Module.register("Hako-ticker", {
           currentPairText += "\t";
         }
 
-        currentPairText = currentData[i].name + '  ' + currentData[i].buyprice;
+        currentPairText = this.currData[i].name + '  ' + this.currData[i].buyprice;
       
         var currentPairElement = document.createElement("span");
-        switch (currentData[i].status) {
+        switch (this.currData[i].status) {
           case 0: // Down
             currentPairElement.className = 'down';
             currentPairText += ' <i class="caret down icon"></i>';
