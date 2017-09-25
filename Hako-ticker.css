@@ -1,4 +1,14 @@
+.main {
+  width: 100%;
+}
 
+table {
+  background-color: black !important;
+}
+
+.tbody {
+  padding: 50;
+}
 
 .marquee
 {
@@ -7,22 +17,22 @@
     overflow: visible;
     white-space: nowrap;
     /* box-sizing: border-box; */
-    animation: marquee 3s linear infinite;
-    -webkit-animation: marquee 3s linear infinite;
+    animation: marquee 50s linear infinite;
+    -webkit-animation: marquee 50s linear infinite;
 }
 
 .ticker {
-  font-size: 96px;
+  font-size: 64px;
   color: white;
 }
 
 .down {
-  font-size: 96px;
+  font-size: 64px;
   color: red;
 }
 
 .up {
-  font-size: 96px;
+  font-size: 64px;
   color: green;
 }
 
