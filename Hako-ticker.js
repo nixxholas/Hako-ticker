@@ -7,7 +7,7 @@ Module.register("Hako-ticker", {
     debugging: true,
     fiat: 'usd',
     showBefore: null,
-    updateInterval: 30000,
+    updateInterval: 1000,
   },
 
   getStyles: function() {
@@ -31,13 +31,14 @@ Module.register("Hako-ticker", {
       for (var pair in data.data) {
         //console.log("getDom() within update for loop");
         for (var i = 0; i < this.currData.length; i++) {
-          //console.log("getDom() update loop count: " + i);
+          console.log("getDom() update loop count: " + i);
           // TODO: PERFORM NOT FOUND CHECKS
           if (this.currData[i].name == pair) {
+            console.log(this.currData[i].name + " discrepancy: " + data.data[pair]["buy_price"] - this.currData[i].buyprice);
             // If the last price is lower than the latest price
             //console.log("Old buy price for " + currentData[i].name + " : " + currentData[i].buyprice);
             if ((data.data[pair]["buy_price"] - this.currData[i].buyprice) > 0) {
-              // It went up! =D
+              // It went up! =D 
               console.log("Bull check: " + (data.data[pair]["buy_price"] - this.currData[i].buyprice) > 0);
               this.currData[i].status = 2;
             } else if ((data.data[pair]["buy_price"] - this.currData[i].buyprice) < 0) {
