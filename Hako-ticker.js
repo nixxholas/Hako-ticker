@@ -34,6 +34,7 @@ Module.register("Hako-ticker", {
           //console.log("getDom() update loop count: " + i);
           // console.log(pair);
           // console.log(data.data[pair]);
+          console.log(data.data[pair] + " is " + this.currData[i].name + ": " + (this.currData[i].name === data.data[pair]));
 
           // TODO: PERFORM NOT FOUND CHECKS
           if (this.currData[i].name === data.data[pair]) {
