@@ -7,7 +7,7 @@ Module.register("Hako-ticker", {
     debugging: true,
     fiat: 'usd',
     showBefore: null,
-    updateInterval: 1000,
+    updateInterval: 2000,
   },
 
   getStyles: function() {
@@ -23,12 +23,12 @@ Module.register("Hako-ticker", {
     var wrapper = document.createElement("marquee");
     wrapper.className = 'bright';
     
-    var data = this.result;
+    var data = JSON.parse(this.result);
 
     if (this.currData.length > 0) { // If current data exists
       // We iterate through each of them and do a cross check.
       //console.log("getDom(): pushing all pairs with checks");
-      for (var pair in data.data) {
+      for (var pair = 0; j < data.data.length; j++) {
         //console.log("getDom() within update for loop");
         for (var i = 0; i < this.currData.length; i++) {
           //console.log("getDom() update loop count: " + i);
