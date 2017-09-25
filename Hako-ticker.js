@@ -32,11 +32,11 @@ Module.register("Hako-ticker", {
         //console.log("getDom() within update for loop");
         for (var i = 0; i < this.currData.length; i++) {
           //console.log("getDom() update loop count: " + i);
-          console.log(pair);
-          console.log(data.data[pair]);
+          // console.log(pair);
+          // console.log(data.data[pair]);
 
           // TODO: PERFORM NOT FOUND CHECKS
-          if (this.currData[i].name === pair) {
+          if (this.currData[i].name === data.data[pair]) {
             console.log(this.currData[i].name + " discrepancy: " + data.data[pair]["buy_price"] - this.currData[i].buyprice);
             // If the last price is lower than the latest price
             //console.log("Old buy price for " + currentData[i].name + " : " + currentData[i].buyprice);
