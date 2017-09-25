@@ -28,7 +28,7 @@ Module.register("Hako-ticker", {
     if (this.currData.length > 0) { // If current data exists
       // We iterate through each of them and do a cross check.
       //console.log("getDom(): pushing all pairs with checks");
-      for (var pair = 0; j < data.data.length; j++) {
+      for (var pair = 0; pair < data.data.length; pair++) {
         //console.log("getDom() within update for loop");
         for (var i = 0; i < this.currData.length; i++) {
           //console.log("getDom() update loop count: " + i);
